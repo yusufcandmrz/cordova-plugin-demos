@@ -20,62 +20,32 @@
 // Wait for the deviceready event before using any of Cordova's device APIs.
 // See https://cordova.apache.org/docs/en/latest/cordova/events/events.html#deviceready
 document.addEventListener('deviceready', onDeviceReady, false);
-const cordovaDOM = document.getElementById("cordova");
-const modelDOM = document.getElementById("model");
-const platformDOM = document.getElementById("platform");
-const uuidDOM = document.getElementById("uuid");
-const versionDOM = document.getElementById("version");
-const manufacturerDOM = document.getElementById("manufacturer");
-const isVirtualDOM = document.getElementById("isVirtual");
-const serialDOM = document.getElementById("serial");
-const sdkVersionDOM = document.getElementById("sdkVersion");
 
 function onDeviceReady() {
     alert("device is ready");
     document.addEventListener("pause", onPause, false);
     document.addEventListener("resume", onResume, false);
+    window.addEventListener("batterystatus", onBatteryStatus, false);
+    window.addEventListener("batterylow", onBatteryLow, false);
+    window.addEventListener("batterycritical", onBatteryCritical);
 }
 
 function onPause() {
-    alert("device has paused");
+    alert("device has paused")
 }
 
 function onResume() {
     alert("device has resumed");
 }
 
-cordovaDOM.onclick = async() => {
-    alert(device.cordova);
+function onBatteryStatus(status) {
+    alert("Level: " + status.level + ", isPlugged: " + status.isPlugged);
 }
 
-modelDOM.onclick = async() => {
-    alert(device.model);
+function onBatteryLow(status) {
+    alert("Battery Level Low: " + status.level + "%")
 }
 
-platformDOM.onclick = async() => {
-    alert(device.platform);
-}
-
-uuidDOM.onclick = async() => {
-    alert(device.uuid);
-}
-
-versionDOM.onclick = async() => {
-    alert(device.version);
-}
-
-manufacturerDOM.onclick = async() => {
-    alert(device.manufacturer);
-}
-
-isVirtualDOM.onclick = async() => {
-    alert(device.isVirtual);
-}
-
-serialDOM.onclick = async() => {
-    alert(device.serial);
-}
-
-sdkVersionDOM.onclick = async() => {
-    alert(device.sdkVersionDOM);
+function onBatteryCritical(status) {
+    alert("Battery Level Critical: " + status.level + "%\nRecharge Soon!")
 }
